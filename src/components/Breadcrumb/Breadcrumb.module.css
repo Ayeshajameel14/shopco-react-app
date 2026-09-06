@@ -1,0 +1,27 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6b7280;
+  padding: 20px 0;
+}
+
+.breadcrumb a {
+  color: #6b7280;
+}
+
+.breadcrumb a:hover {
+  color: #000000;
+}
+
+.crumbItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crumbItem span {
+  color: #000000;
+  font-weight: 500;
+}

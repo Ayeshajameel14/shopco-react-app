@@ -1,0 +1,87 @@
+.footer {
+  background: #f0f0f0;
+  margin-top: 60px;
+}
+
+.footerContent {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 50px 40px 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.brandCol .logo {
+  font-size: 26px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -1px;
+}
+
+.brandCol p {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #6b7280;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.socialIcons svg {
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 6px;
+  width: 28px;
+  height: 28px;
+}
+
+.linkCol h4 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.linkCol ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linkCol li {
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.linkCol li:hover {
+  color: #000000;
+}
+
+.bottomBar {
+  border-top: 1px solid #d1d5db;
+  text-align: center;
+  padding: 18px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+@media screen and (max-width: 900px) {
+  .footerContent {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footerContent {
+    grid-template-columns: 1fr;
+    padding: 40px 20px 20px;
+  }
+}

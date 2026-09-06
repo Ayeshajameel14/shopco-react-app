@@ -1,0 +1,134 @@
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.header h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.clearButton {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #6b7280;
+  text-decoration: underline;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 14px;
+  color: #6b7280;
+  border-radius: 8px;
+}
+
+.categoryItem:hover {
+  background: #f9fafb;
+  color: #000000;
+}
+
+.activeCategory {
+  background: #000000;
+  color: #ffffff;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 18px 0;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 0;
+  margin-bottom: 14px;
+}
+
+.priceRange input {
+  width: 100%;
+}
+
+.priceRange p {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.colorSwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+}
+
+.activeColor {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+.sizeGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sizeButton {
+  padding: 8px 14px;
+  border-radius: 40px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 13px;
+  color: #374151;
+}
+
+.activeSize {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+@media screen and (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+  }
+}

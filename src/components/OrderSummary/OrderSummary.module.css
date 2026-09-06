@@ -1,0 +1,104 @@
+.summary {
+  width: 380px;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 24px;
+  height: fit-content;
+}
+
+.summary h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.discountText {
+  color: #ff3333;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 16px 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.promoForm {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.promoInput {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9fafb;
+  border-radius: 40px;
+  padding: 10px 16px;
+  color: #6b7280;
+}
+
+.promoInput input {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.applyButton {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.applyButton:hover {
+  background: #262626;
+}
+
+.checkoutButton {
+  width: 100%;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 40px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.checkoutButton:hover {
+  background: #262626;
+}
+
+@media screen and (max-width: 900px) {
+  .summary {
+    width: 100%;
+  }
+}

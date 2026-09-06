@@ -1,0 +1,29 @@
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 40px;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+@media screen and (max-width: 600px) {
+  .section {
+    padding: 30px 20px;
+  }
+
+  .sectionTitle {
+    font-size: 24px;
+  }
+}
