@@ -106,7 +106,6 @@
   align-items: center;
   justify-content: center;
 }
-
 @media screen and (max-width: 900px) {
   .mainNav {
     padding: 16px 20px;
@@ -132,6 +131,19 @@
 
   .searchBar {
     order: 2;
+    flex-basis: 100%;
     max-width: 100%;
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo {
+    font-size: 20px;
+  }
+
+  .navIcons {
+    gap: 14px;
   }
 }
