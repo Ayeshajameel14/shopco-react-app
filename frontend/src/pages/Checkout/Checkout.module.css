@@ -1,0 +1,400 @@
+.checkoutPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 55px 24px 80px;
+  color: #171717;
+}
+
+.heading {
+  margin-bottom: 35px;
+}
+
+.eyebrow {
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.heading h1 {
+  margin: 12px 0;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+}
+
+.heading > p:last-child,
+.sectionDescription {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.checkoutLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.9fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.formCard,
+.summaryCard {
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.formCard h2,
+.summaryCard h2 {
+  margin: 0;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.sectionDescription {
+  margin: 8px 0 26px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  background: #fff;
+  color: #171717;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: #171717;
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 5%);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.paymentBox {
+  margin-top: 32px;
+  padding-top: 25px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.paymentBox h3 {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+
+.paymentOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.paymentOption input {
+  accent-color: #171717;
+}
+
+.paymentOption span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.paymentOption strong {
+  font-size: 13px;
+}
+
+.paymentOption small {
+  color: #777;
+  font-size: 12px;
+}
+
+.placeOrderButton,
+.shopButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 49px;
+  margin-top: 24px;
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 30px;
+  background: #171717;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.placeOrderButton:hover,
+.shopButton:hover {
+  background: #393939;
+}
+
+.placeOrderButton:active {
+  transform: scale(0.99);
+}
+
+.backLink {
+  display: block;
+  margin-top: 18px;
+  color: #555;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #000;
+}
+
+.infoMessage {
+  margin: 20px 0 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f3f3f3;
+  color: #333;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.summaryCard h2 {
+  margin-bottom: 24px;
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.productImage {
+  position: relative;
+  flex-shrink: 0;
+  width: 68px;
+  height: 76px;
+  border-radius: 9px;
+  background: #f1f1f1;
+}
+
+.productImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.quantityBadge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 50%;
+  background: #555;
+  color: #fff;
+  font-size: 11px;
+}
+
+.productInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.productInfo h3 {
+  overflow: hidden;
+  margin: 0 0 7px;
+  font-size: 13px;
+  text-overflow: ellipsis;
+}
+
+.productInfo p {
+  margin: 4px 0;
+  color: #777;
+  font-size: 11px;
+}
+
+.productPrice {
+  align-self: flex-start;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.summaryLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  color: #666;
+  font-size: 13px;
+}
+
+.totalLine {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #e8e8e8;
+  color: #171717;
+  font-size: 17px;
+}
+
+.secureNote {
+  margin: 22px 0 0;
+  color: #888;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.empty,
+.status {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.empty h1 {
+  font-size: 30px;
+}
+
+.empty p {
+  color: #777;
+  line-height: 1.7;
+}
+
+.shopButton {
+  max-width: 240px;
+  margin: 25px auto 0;
+}
+
+@media screen and (max-width: 850px) {
+  .checkoutLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryCard {
+    order: -1;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .checkoutPage {
+    padding: 35px 16px 55px;
+  }
+
+  .formCard,
+  .summaryCard {
+    padding: 21px 17px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .heading h1 {
+    letter-spacing: -1px;
+  }
+}
+
+.paymentSelectLabel {
+  display: block;
+  margin: 12px 0 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.paymentDropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.paymentDropdown:focus-within {
+  border-color: #111;
+}
+
+.paymentDropdownIcon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.paymentSelect {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 14px 28px 14px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #111;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.paymentNotice {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #666;
+}

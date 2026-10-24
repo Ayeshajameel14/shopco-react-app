@@ -1,0 +1,392 @@
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  color: #172033;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #7771e8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.pageHeader h1 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 750;
+  letter-spacing: -1.1px;
+}
+
+.subtitle {
+  margin: 9px 0 0;
+  color: #81899b;
+  font-size: 14px;
+}
+
+.refreshButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 43px;
+  padding: 0 16px;
+  border: 1px solid #e3e6ef;
+  border-radius: 11px;
+  background: #fff;
+  color: #333b50;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.refreshButton:hover {
+  background: #f7f7ff;
+  border-color: #c9c5ff;
+}
+
+.refreshButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.statCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #eaecf3;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgb(27 39 75 / 3%);
+}
+
+.statIcon {
+  display: grid;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 13px;
+  background: #f0efff;
+  color: #7068dc;
+}
+
+.statCard p {
+  margin: 2px 0 9px;
+  color: #7b8497;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.statCard h2 {
+  margin: 0;
+  color: #192238;
+  font-size: 29px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+}
+
+.statCard span {
+  display: block;
+  margin-top: 7px;
+  color: #969daf;
+  font-size: 12px;
+}
+
+.tableCard {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e9ebf2;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgb(27 39 75 / 3%);
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 23px 24px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.tableHeader h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -0.3px;
+}
+
+.tableHeader p {
+  margin: 7px 0 0;
+  color: #8a92a4;
+  font-size: 12px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 290px);
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid #e4e7ef;
+  border-radius: 10px;
+  background: #fbfcfe;
+  color: #8c94a6;
+}
+
+.searchBox:focus-within {
+  border-color: #8b83ed;
+  box-shadow: 0 0 0 3px rgb(124 115 230 / 10%);
+}
+
+.searchBox input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #252d41;
+  font: inherit;
+  font-size: 12px;
+}
+
+.searchBox input::placeholder {
+  color: #a0a6b5;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table thead {
+  background: #f8f9fc;
+}
+
+.table th {
+  padding: 15px 24px;
+  color: #858da0;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 17px 24px;
+  border-top: 1px solid #f0f1f6;
+  color: #626c80;
+  font-size: 12px;
+}
+
+.table tbody tr {
+  transition: background 0.15s;
+}
+
+.table tbody tr:hover {
+  background: #fafaff;
+}
+
+.customerCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid #e5e2ff;
+  border-radius: 12px;
+  background: #f0efff;
+  color: #7068dc;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.customerCell strong {
+  display: block;
+  color: #263047;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.customerCell span {
+  display: block;
+  margin-top: 5px;
+  color: #9aa1b0;
+  font-size: 10px;
+}
+
+.emailCell,
+.dateCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.emailCell svg,
+.dateCell svg {
+  flex-shrink: 0;
+  color: #969db0;
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1px solid #dcefe5;
+  border-radius: 7px;
+  background: #f0faf4;
+  color: #268355;
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: capitalize;
+}
+
+.messageState {
+  display: flex;
+  min-height: 230px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 30px;
+  color: #969daf;
+  text-align: center;
+  font-size: 13px;
+}
+
+.messageState h3 {
+  margin: 0;
+  color: #30394e;
+  font-size: 16px;
+}
+
+.messageState p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 20px;
+  padding: 16px;
+  border: 1px solid #f4d6d6;
+  border-radius: 10px;
+  background: #fff7f7;
+  color: #b43d45;
+  font-size: 13px;
+}
+
+.errorMessage p {
+  margin: 0;
+}
+
+.errorMessage button {
+  padding: 8px 12px;
+  border: 1px solid #edc4c4;
+  border-radius: 7px;
+  background: #fff;
+  color: #a52d36;
+  cursor: pointer;
+}
+
+.tableFooter {
+  padding: 15px 24px;
+  border-top: 1px solid #edf0f5;
+  color: #858da0;
+  font-size: 11px;
+}
+
+@media screen and (max-width: 900px) {
+  .tableHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .searchBox {
+    width: 100%;
+  }
+
+  .table th,
+  .table td {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page {
+    gap: 20px;
+  }
+
+  .pageHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .refreshButton {
+    width: 100%;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .statCard {
+    padding: 19px;
+  }
+
+  .tableHeader {
+    padding: 19px;
+  }
+
+  .table th,
+  .table td {
+    padding: 14px 16px;
+  }
+
+  .errorMessage {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

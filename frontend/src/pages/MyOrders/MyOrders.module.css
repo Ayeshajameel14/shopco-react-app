@@ -1,0 +1,320 @@
+
+.page {
+  max-width: 1200px;
+  min-height: 65vh;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  color: #171717;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 42px);
+  letter-spacing: -1.5px;
+}
+
+.subtitle {
+  margin: 12px 0 0;
+  color: #777;
+  line-height: 1.6;
+}
+
+.continueButton,
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 8px;
+  background: #171717;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.continueButton:hover,
+.primaryButton:hover {
+  background: #444;
+}
+
+.orderCount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 0;
+  margin-bottom: 18px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.orderCount strong {
+  color: #777;
+  font-size: 13px;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.orderCard {
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.orderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 22px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.orderMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 100px;
+}
+
+.orderMeta span,
+.deliveryInfo span,
+.totalInfo span {
+  color: #777;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.orderMeta strong {
+  max-width: 190px;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.status {
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.pending {
+  background: #fff2d5;
+  color: #946200;
+}
+
+.confirmed {
+  background: #e1f2ff;
+  color: #075b9a;
+}
+
+.shipped {
+  background: #eee6ff;
+  color: #6236a4;
+}
+
+.delivered {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.products {
+  padding: 8px 22px;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.product:last-child {
+  border-bottom: none;
+}
+
+.productImage {
+  flex-shrink: 0;
+  width: 82px;
+  height: 92px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f2f2f2;
+}
+
+.productImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.productInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.productInfo h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.productInfo p {
+  margin: 4px 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.itemPrice {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.orderFooter {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px;
+  border-top: 1px solid #eee;
+}
+
+.deliveryInfo {
+  flex: 1;
+}
+
+.deliveryInfo p {
+  margin: 8px 0 0;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.totalInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.totalInfo strong {
+  font-size: 22px;
+}
+
+.emptyState {
+  padding: 64px 24px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.emptyIcon {
+  margin-bottom: 16px;
+  font-size: 42px;
+}
+
+.emptyState h1,
+.emptyState h2 {
+  margin: 0 0 12px;
+}
+
+.emptyState p {
+  margin: 0 0 24px;
+  color: #777;
+  line-height: 1.6;
+}
+
+.message {
+  padding: 60px 20px;
+  color: #666;
+  text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  .page {
+    padding: 32px 16px 56px;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .orderHeader {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .orderMeta {
+    width: calc(50% - 10px);
+  }
+
+  .orderMeta strong {
+    max-width: 100%;
+  }
+
+  .product {
+    gap: 12px;
+  }
+
+  .productImage {
+    width: 66px;
+    height: 78px;
+  }
+
+  .productInfo h3 {
+    font-size: 13px;
+  }
+
+  .productInfo p {
+    font-size: 12px;
+  }
+
+  .itemPrice {
+    font-size: 12px;
+  }
+
+  .orderFooter {
+    flex-direction: column;
+  }
+
+  .totalInfo {
+    align-items: flex-start;
+  }
+}
