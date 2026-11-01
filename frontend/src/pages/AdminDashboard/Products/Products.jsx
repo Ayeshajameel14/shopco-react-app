@@ -194,6 +194,7 @@ function Products() {
       return;
     }
 
+    
     const payload = {
       name: form.name.trim(),
       brand: form.brand.trim(),
@@ -210,6 +211,8 @@ function Products() {
       colors: splitValues(form.colors),
     };
 
+    console.log("Brand being sent:", payload.brand);
+
     if (
       (payload.originalPrice !== null &&
         (!Number.isFinite(payload.originalPrice) ||
@@ -223,6 +226,7 @@ function Products() {
     }
 
     const isEditing = Boolean(editingProduct);
+
 
     const endpoint = isEditing
       ? `${API_URL}/products/${editingProduct.id}`
