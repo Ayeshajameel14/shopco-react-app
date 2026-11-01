@@ -467,3 +467,285 @@
     min-height: 42px;
   }
 }
+
+/* Header actions */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.addButton,
+.saveButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #6347e8;
+  border-radius: 9px;
+  background: #6347e8;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addButton:hover,
+.saveButton:hover {
+  background: #5035d0;
+}
+
+.editButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border: 1px solid #e5e0ff;
+  border-radius: 7px;
+  background: #f4f1ff;
+  color: #6347e8;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background: #e9e3ff;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(20, 18, 35, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.productModal {
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #ececf2;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.18);
+}
+
+.modalHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 23px 25px;
+  border-bottom: 1px solid #eeeeF3;
+  background: #ffffff;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #202027;
+  font-size: 20px;
+}
+
+.modalHeader p {
+  margin: 7px 0 0;
+  color: #92939d;
+  font-size: 12px;
+}
+
+.closeButton {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border: 1px solid #eeeeF3;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #777985;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background: #f5f4fa;
+  color: #6347e8;
+}
+
+.productForm {
+  padding: 24px 25px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  color: #44454f;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.formField input,
+.formField textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px 13px;
+  border: 1px solid #e7e7ef;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #25252b;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  transition: 0.2s ease;
+}
+
+.formField input {
+  min-height: 42px;
+}
+
+.formField textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.formField input:focus,
+.formField textarea:focus {
+  border-color: #a79af4;
+  box-shadow: 0 0 0 3px rgba(99, 71, 232, 0.07);
+}
+
+.formField input::placeholder,
+.formField textarea::placeholder {
+  color: #a1a2ab;
+}
+
+.formField small {
+  color: #92939d;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.imagePreview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #eeeeF3;
+  border-radius: 9px;
+  background: #fafafd;
+  color: #858792;
+  font-size: 11px;
+}
+
+.imagePreview img {
+  width: 65px;
+  height: 70px;
+  border-radius: 7px;
+  object-fit: cover;
+  background: #f0f0f4;
+}
+
+.formError {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px solid #f2caca;
+  border-radius: 8px;
+  background: #fff3f3;
+  color: #b52d2d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+  padding-top: 19px;
+  border-top: 1px solid #eeeeF3;
+}
+
+.cancelButton {
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid #e7e7ef;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #555660;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background: #f7f7fa;
+}
+
+.addButton:disabled,
+.saveButton:disabled,
+.cancelButton:disabled,
+.closeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 650px) {
+  .headerActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .modalOverlay {
+    padding: 10px;
+  }
+
+  .productModal {
+    max-height: 95vh;
+  }
+
+  .modalHeader,
+  .productForm {
+    padding: 18px;
+  }
+}

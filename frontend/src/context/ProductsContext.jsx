@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 
 const ProductsContext = createContext();
@@ -16,43 +17,37 @@ export function ProductsProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const refreshProducts = useCallback(async () => {
+    try {
+      setError("");
 
-    async function fetchProducts() {
-      try {
-        setLoading(true);
-        setError("");
+      const response = await fetch(`${API_URL}/products`);
 
-        const response = await fetch(`${API_URL}/products`, {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error("Products load nahi ho sake.");
-        }
-
-        const data = await response.json();
-        setProducts(data.products || []);
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message || "Something went wrong.");
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
+      if (!response.ok) {
+        throw new Error("Products load nahi ho sake.");
       }
+
+      const data = await response.json();
+      setProducts(data.products || []);
+    } catch (err) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
     }
-
-    fetchProducts();
-
-    return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    refreshProducts();
+  }, [refreshProducts]);
 
   return (
     <ProductsContext.Provider
-      value={{ products, loading, error }}
+      value={{
+        products,
+        loading,
+        error,
+        refreshProducts,
+      }}
     >
       {children}
     </ProductsContext.Provider>

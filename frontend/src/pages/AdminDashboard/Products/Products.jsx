@@ -7,22 +7,47 @@ import {
   AlertCircle,
   Star,
   Tags,
+  Plus,
+  Pencil,
+  X,
+  Save,
 } from "lucide-react";
 
 import { useAuth } from "../../../context/AuthContext";
+import { useProducts } from "../../../context/ProductsContext";
 import styles from "./Products.module.css";
 
 const API_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+const emptyForm = {
+  name: "",
+  price: "",
+  originalPrice: "",
+  discount: "",
+  category: "",
+  style: "",
+  description: "",
+  imageUrl: "",
+  sizes: "",
+  colors: "",
+};
+
 function Products() {
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading, token } = useAuth();
+  const { refreshProducts } = useProducts();
 
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const [showForm, setShowForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+  const [formError, setFormError] = useState("");
 
   async function loadProducts() {
     setFetching(true);
@@ -45,13 +70,11 @@ function Products() {
   }
 
   useEffect(() => {
-    if (!authLoading) {
-      loadProducts();
-    }
+    if (!authLoading) loadProducts();
   }, [authLoading]);
 
-  const categories = useMemo(() => {
-    return [
+  const categories = useMemo(
+    () => [
       "All",
       ...new Set(
         products
@@ -59,8 +82,9 @@ function Products() {
           .filter(Boolean)
           .sort((a, b) => a.localeCompare(b))
       ),
-    ];
-  }, [products]);
+    ],
+    [products]
+  );
 
   const filteredProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -89,6 +113,149 @@ function Products() {
       ) / products.length
     : 0;
 
+  function openAddForm() {
+    setEditingProduct(null);
+    setForm(emptyForm);
+    setFormError("");
+    setShowForm(true);
+  }
+
+  function openEditForm(product) {
+    setEditingProduct(product);
+
+    setForm({
+      name: product.name || "",
+      price: product.price ?? "",
+      originalPrice: product.originalPrice ?? "",
+      discount: product.discount ?? "",
+      category: product.category || "",
+      style: product.style || "",
+      description: product.description || "",
+      imageUrl: Array.isArray(product.images)
+        ? product.images.join(", ")
+        : "",
+      sizes: Array.isArray(product.sizes)
+        ? product.sizes.join(", ")
+        : "",
+      colors: Array.isArray(product.colors)
+        ? product.colors.join(", ")
+        : "",
+    });
+
+    setFormError("");
+    setShowForm(true);
+  }
+
+  function closeForm() {
+    if (saving) return;
+    setShowForm(false);
+    setEditingProduct(null);
+    setForm(emptyForm);
+    setFormError("");
+  }
+
+  function handleFormChange(event) {
+    const { name, value } = event.target;
+    setForm((previous) => ({ ...previous, [name]: value }));
+  }
+
+  function splitValues(value) {
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setFormError("");
+
+    if (!token) {
+      setFormError("Please log in again to continue.");
+      return;
+    }
+
+    if (
+      !form.name.trim() ||
+      !form.category.trim() ||
+      form.price === ""
+    ) {
+      setFormError("Product name, price and category are required.");
+      return;
+    }
+
+    const price = Number(form.price);
+
+    if (!Number.isFinite(price) || price < 0) {
+      setFormError("Please enter a valid price.");
+      return;
+    }
+
+    const payload = {
+      name: form.name.trim(),
+      price,
+      originalPrice:
+        form.originalPrice === "" ? null : Number(form.originalPrice),
+      discount:
+        form.discount === "" ? null : Number(form.discount),
+      category: form.category.trim(),
+      style: form.style.trim(),
+      description: form.description.trim(),
+      images: splitValues(form.imageUrl),
+      sizes: splitValues(form.sizes),
+      colors: splitValues(form.colors),
+    };
+
+    if (
+      (payload.originalPrice !== null &&
+        (!Number.isFinite(payload.originalPrice) ||
+          payload.originalPrice < 0)) ||
+      (payload.discount !== null &&
+        (!Number.isFinite(payload.discount) ||
+          payload.discount < 0))
+    ) {
+      setFormError("Please enter valid original price and discount values.");
+      return;
+    }
+
+    const isEditing = Boolean(editingProduct);
+
+    const endpoint = isEditing
+      ? `${API_URL}/products/${editingProduct.id}`
+      : `${API_URL}/products`;
+
+    setSaving(true);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: isEditing ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to save product.");
+      }
+
+      // Update Admin Dashboard and shared Shop products
+      await Promise.all([
+        loadProducts(),
+        refreshProducts(),
+      ]);
+
+      closeForm();
+    } catch (err) {
+      setFormError(err.message || "Something went wrong.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   if (authLoading || fetching) {
     return (
       <section className={styles.page}>
@@ -107,19 +274,30 @@ function Products() {
           <p className={styles.eyebrow}>STORE MANAGEMENT</p>
           <h1>Products</h1>
           <p className={styles.subtitle}>
-            Browse your catalog and review product information.
+            Manage your catalog and product information.
           </p>
         </div>
 
-        <button
-          type="button"
-          className={styles.refreshButton}
-          onClick={loadProducts}
-          disabled={fetching}
-        >
-          <RefreshCw size={16} />
-          Refresh
-        </button>
+        <div className={styles.headerActions}>
+          <button
+            type="button"
+            className={styles.refreshButton}
+            onClick={loadProducts}
+            disabled={fetching}
+          >
+            <RefreshCw size={16} />
+            Refresh
+          </button>
+
+          <button
+            type="button"
+            className={styles.addButton}
+            onClick={openAddForm}
+          >
+            <Plus size={17} />
+            Add Product
+          </button>
+        </div>
       </header>
 
       {error && (
@@ -171,7 +349,7 @@ function Products() {
         <div className={styles.panelHeader}>
           <div>
             <h2>Product catalog</h2>
-            <p>Search products or filter by category.</p>
+            <p>Search, edit or add products to your store.</p>
           </div>
 
           <span className={styles.resultCount}>
@@ -204,17 +382,11 @@ function Products() {
           </select>
         </div>
 
-        {error && products.length === 0 ? (
-          <div className={styles.emptyState}>
-            <AlertCircle size={34} />
-            <h3>Products could not be loaded</h3>
-            <p>Check that your backend is running, then try again.</p>
-          </div>
-        ) : products.length === 0 ? (
+        {products.length === 0 ? (
           <div className={styles.emptyState}>
             <Package size={36} />
             <h3>No products found in the catalog</h3>
-            <p>Products from your database will appear here.</p>
+            <p>Use Add Product to create your first product.</p>
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className={styles.emptyState}>
@@ -245,6 +417,7 @@ function Products() {
                   <th>Rating</th>
                   <th>Sizes</th>
                   <th>Colors</th>
+                  <th>Action</th>
                 </tr>
               </thead>
 
@@ -279,9 +452,7 @@ function Products() {
                           <div className={styles.productInfo}>
                             <strong>{product.name || "Unnamed product"}</strong>
                             <span>
-                              {product.description
-                                ? product.description
-                                : "No description"}
+                              {product.description || "No description"}
                             </span>
                           </div>
                         </div>
@@ -332,6 +503,17 @@ function Products() {
                             : "—"}
                         </span>
                       </td>
+
+                      <td>
+                        <button
+                          type="button"
+                          className={styles.editButton}
+                          onClick={() => openEditForm(product)}
+                        >
+                          <Pencil size={14} />
+                          Edit
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}
@@ -340,6 +522,200 @@ function Products() {
           </div>
         )}
       </section>
+
+      {showForm && (
+        <div className={styles.modalOverlay}>
+          <section
+            className={styles.productModal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="productFormTitle"
+          >
+            <div className={styles.modalHeader}>
+              <div>
+                <h2 id="productFormTitle">
+                  {editingProduct ? "Edit Product" : "Add New Product"}
+                </h2>
+                <p>Enter the product details below.</p>
+              </div>
+
+              <button
+                type="button"
+                className={styles.closeButton}
+                onClick={closeForm}
+                disabled={saving}
+                aria-label="Close form"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className={styles.productForm}>
+              <div className={styles.formGrid}>
+                <label className={styles.formField}>
+                  Product name *
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleFormChange}
+                    placeholder="Enter product name"
+                    required
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Category *
+                  <input
+                    name="category"
+                    value={form.category}
+                    onChange={handleFormChange}
+                    placeholder="e.g. T-shirts"
+                    required
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Price *
+                  <input
+                    type="number"
+                    name="price"
+                    min="0"
+                    step="0.01"
+                    value={form.price}
+                    onChange={handleFormChange}
+                    placeholder="Enter price"
+                    required
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Original price
+                  <input
+                    type="number"
+                    name="originalPrice"
+                    min="0"
+                    step="0.01"
+                    value={form.originalPrice}
+                    onChange={handleFormChange}
+                    placeholder="Optional"
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Discount
+                  <input
+                    type="number"
+                    name="discount"
+                    min="0"
+                    value={form.discount}
+                    onChange={handleFormChange}
+                    placeholder="Optional"
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Style
+                  <input
+                    name="style"
+                    value={form.style}
+                    onChange={handleFormChange}
+                    placeholder="e.g. Casual"
+                  />
+                </label>
+
+                <label className={`${styles.formField} ${styles.fullWidth}`}>
+                  Image URL
+                  <input
+                    name="imageUrl"
+                    type="text"
+                    value={form.imageUrl}
+                    onChange={handleFormChange}
+                    placeholder="Paste image URL here"
+                  />
+                  <small>
+                    Multiple image URLs can be separated with commas.
+                  </small>
+                </label>
+
+                {form.imageUrl.trim() && (
+                  <div className={`${styles.imagePreview} ${styles.fullWidth}`}>
+                    <img
+                      src={splitValues(form.imageUrl)[0]}
+                      alt="Product preview"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
+                    <span>Image preview</span>
+                  </div>
+                )}
+
+                <label className={styles.formField}>
+                  Sizes
+                  <input
+                    name="sizes"
+                    value={form.sizes}
+                    onChange={handleFormChange}
+                    placeholder="Small, Medium, Large"
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Colors
+                  <input
+                    name="colors"
+                    value={form.colors}
+                    onChange={handleFormChange}
+                    placeholder="Black, White, Blue"
+                  />
+                </label>
+
+                <label className={`${styles.formField} ${styles.fullWidth}`}>
+                  Description
+                  <textarea
+                    name="description"
+                    rows="4"
+                    value={form.description}
+                    onChange={handleFormChange}
+                    placeholder="Write product description..."
+                  />
+                </label>
+              </div>
+
+              {formError && (
+                <div className={styles.formError} role="alert">
+                  <AlertCircle size={16} />
+                  {formError}
+                </div>
+              )}
+
+              <div className={styles.formActions}>
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={closeForm}
+                  disabled={saving}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className={styles.saveButton}
+                  disabled={saving}
+                >
+                  <Save size={16} />
+                  {saving
+                    ? "Saving..."
+                    : editingProduct
+                      ? "Update Product"
+                      : "Save Product"}
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
     </section>
   );
 }
