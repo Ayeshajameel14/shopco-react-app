@@ -78,14 +78,13 @@ function Navbar() {
         </Link>
 
         <nav
-          className={`${styles.navLinks} ${
-            menuOpen ? styles.showMenu : ""
-          }`}
+          className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ""
+            }`}
         >
           <Link to="/shop" onClick={closeMenu}>Shop</Link>
-          <Link to="/shop" onClick={closeMenu}>On Sale</Link>
-          <Link to="/shop" onClick={closeMenu}>New Arrivals</Link>
-          <Link to="/shop" onClick={closeMenu}>Brands</Link>
+          <Link to="/shop?filter=sale" onClick={closeMenu}>On Sale</Link>
+          <Link to="/shop?filter=new" onClick={closeMenu}>New Arrivals</Link>
+          <Link to="/shop?filter=brands" onClick={closeMenu}>Brands</Link>
 
           {token ? (
             <>
@@ -99,14 +98,14 @@ function Navbar() {
                 </Link>
               )}
 
-              <button
+              {/* <button
                 type="button"
                 onClick={handleLogout}
                 className={`${styles.logoutButton} ${styles.mobileOnly}`}
               >
                 <LogOut size={18} />
                 Logout
-              </button>
+              </button> */}
             </>
           ) : (
             <Link

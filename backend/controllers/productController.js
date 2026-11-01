@@ -1,3 +1,4 @@
+
 const Product = require("../models/Product");
 
 // Get all products
@@ -56,6 +57,7 @@ const createProduct = async (req, res) => {
   try {
     const {
       name,
+      brand,
       price,
       originalPrice,
       discount,
@@ -91,6 +93,7 @@ const createProduct = async (req, res) => {
     const product = await Product.create({
       id: nextId,
       name: name.trim(),
+      brand: brand ? brand.trim() : "",
       price: numericPrice,
       originalPrice: originalPrice ?? null,
       discount: discount ?? null,
@@ -131,6 +134,7 @@ const updateProduct = async (req, res) => {
 
     const allowedFields = [
       "name",
+      "brand",
       "price",
       "originalPrice",
       "discount",
@@ -165,6 +169,10 @@ const updateProduct = async (req, res) => {
 
     if (updates.name !== undefined) {
       updates.name = updates.name.trim();
+    }
+
+    if (updates.brand !== undefined) {
+      updates.brand = updates.brand.trim();
     }
 
     if (updates.category !== undefined) {

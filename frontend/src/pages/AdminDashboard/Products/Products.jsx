@@ -22,6 +22,7 @@ const API_URL =
 
 const emptyForm = {
   name: "",
+  brand: "",
   price: "",
   originalPrice: "",
   discount: "",
@@ -93,6 +94,7 @@ function Products() {
       const matchesSearch =
         !query ||
         String(product.name || "").toLowerCase().includes(query) ||
+        String(product.brand || "").toLowerCase().includes(query) ||
         String(product.category || "").toLowerCase().includes(query) ||
         String(product.id ?? "").includes(query);
 
@@ -125,6 +127,7 @@ function Products() {
 
     setForm({
       name: product.name || "",
+      brand: product.brand || "",
       price: product.price ?? "",
       originalPrice: product.originalPrice ?? "",
       discount: product.discount ?? "",
@@ -193,6 +196,7 @@ function Products() {
 
     const payload = {
       name: form.name.trim(),
+      brand: form.brand.trim(),
       price,
       originalPrice:
         form.originalPrice === "" ? null : Number(form.originalPrice),
@@ -242,7 +246,6 @@ function Products() {
         throw new Error(data.message || "Unable to save product.");
       }
 
-      // Update Admin Dashboard and shared Shop products
       await Promise.all([
         loadProducts(),
         refreshProducts(),
@@ -362,7 +365,7 @@ function Products() {
             <Search size={18} />
             <input
               type="search"
-              placeholder="Search by name, ID or category..."
+              placeholder="Search by name, brand, ID or category..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
@@ -411,6 +414,7 @@ function Products() {
                 <tr>
                   <th>Product</th>
                   <th>Product ID</th>
+                  <th>Brand</th>
                   <th>Category</th>
                   <th>Price</th>
                   <th>Original price</th>
@@ -460,6 +464,10 @@ function Products() {
 
                       <td className={styles.idCell}>
                         {product.id ?? "—"}
+                      </td>
+
+                      <td>
+                        {product.brand || "—"}
                       </td>
 
                       <td>
@@ -560,6 +568,16 @@ function Products() {
                     onChange={handleFormChange}
                     placeholder="Enter product name"
                     required
+                  />
+                </label>
+
+                <label className={styles.formField}>
+                  Brand
+                  <input
+                    name="brand"
+                    value={form.brand}
+                    onChange={handleFormChange}
+                    placeholder="e.g. Nike, Adidas, Zara"
                   />
                 </label>
 

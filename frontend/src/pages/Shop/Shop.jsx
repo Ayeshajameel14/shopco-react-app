@@ -24,6 +24,8 @@ function Shop() {
   const searchText = searchParams.get("search") || "";
   const searchQuery = searchText.trim().toLowerCase();
 
+  const activeFilter = searchParams.get("filter") || "all";
+
   const [filters, setFilters] = useState(initialFilters);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
@@ -35,80 +37,120 @@ function Shop() {
     setFilters(initialFilters);
   };
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      // Search by product name, title, category, or style
-      const searchableFields = [
-        product.name,
-        product.title,
-        product.category,
-        product.style,
-      ];
+  const pageTitle = {
+    all: "All Products",
+    sale: "On Sale",
+    new: "New Arrivals",
+    brands: "Shop by Brands",
+  };
 
-      const matchesSearch =
-        !searchQuery ||
-        searchableFields.some(
+  const filteredProducts = useMemo(() => {
+    let result = [...products];
+
+    // On Sale: Products with a discount or reduced original price
+    if (activeFilter === "sale") {
+      result = result.filter((product) => {
+        const hasDiscount = Number(product.discount) > 0;
+
+        const hasReducedPrice =
+          Number(product.originalPrice) > Number(product.price) &&
+          Number(product.originalPrice) > 0;
+
+        return hasDiscount || hasReducedPrice;
+      });
+    }
+
+    // New Arrivals: Sort products by newest creation date
+    if (activeFilter === "new") {
+      result = result
+        .filter((product) => product.createdAt)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() -
+            new Date(a.createdAt).getTime()
+        );
+    }
+
+    // Brands: Only products with a brand
+    if (activeFilter === "brands") {
+      result = result.filter(
+        (product) =>
+          product.brand &&
+          product.brand.trim() !== ""
+      );
+    }
+
+    // Search by product name, brand, category, or style
+    if (searchQuery) {
+      result = result.filter((product) => {
+        const searchableFields = [
+          product.name,
+          product.title,
+          product.brand,
+          product.category,
+          product.style,
+        ];
+
+        return searchableFields.some(
           (value) =>
             value &&
             String(value).toLowerCase().includes(searchQuery)
         );
+      });
+    }
 
-      if (!matchesSearch) {
-        return false;
-      }
+    // Category filter
+    if (filters.category) {
+      result = result.filter(
+        (product) => product.category === filters.category
+      );
+    }
 
-      // Category filter
-      if (
-        filters.category &&
-        product.category !== filters.category
-      ) {
-        return false;
-      }
+    // Style filter
+    if (filters.style) {
+      result = result.filter(
+        (product) => product.style === filters.style
+      );
+    }
 
-      // Style filter
-      if (
-        filters.style &&
-        product.style !== filters.style
-      ) {
-        return false;
-      }
+    // Color filter
+    if (filters.color) {
+      result = result.filter((product) =>
+        (product.colors || []).includes(filters.color)
+      );
+    }
 
-      // Color filter
-      if (
-        filters.color &&
-        !(product.colors || []).includes(filters.color)
-      ) {
-        return false;
-      }
+    // Size filter
+    if (filters.size) {
+      result = result.filter((product) =>
+        (product.sizes || []).includes(filters.size)
+      );
+    }
 
-      // Size filter
-      if (
-        filters.size &&
-        !(product.sizes || []).includes(filters.size)
-      ) {
-        return false;
-      }
+    // Maximum price filter
+    result = result.filter(
+      (product) => Number(product.price) <= filters.maxPrice
+    );
 
-      // Maximum price filter
-      if (Number(product.price) > filters.maxPrice) {
-        return false;
-      }
+    // Show only the latest 8 products in New Arrivals
+    if (activeFilter === "new") {
+      result = result.slice(0, 8);
+    }
 
-      return true;
-    });
-  }, [products, filters, searchQuery]);
+    return result;
+  }, [products, filters, searchQuery, activeFilter]);
+
+  const heading = searchQuery
+    ? `Search Results: ${searchText}`
+    : pageTitle[activeFilter] || "All Products";
 
   return (
     <main className={styles.shopPage}>
       <div className={styles.container}>
-        <Breadcrumb items={[{ label: "Shop" }]} />
+        <Breadcrumb items={[{ label: heading }]} />
 
         <div className={styles.headerRow}>
-          <h1>
-            {searchQuery
-              ? `Search Results: ${searchText}`
-              : "All Products"}
-          </h1>
+          <h1>{heading}</h1>
 
           <button
             type="button"
@@ -145,12 +187,18 @@ function Shop() {
             </div>
 
             <div className={styles.gridWrapper}>
-              {searchQuery && filteredProducts.length === 0 ? (
+              {filteredProducts.length === 0 ? (
                 <div>
-                  <h2>No matching products found</h2>
+                  <h2>
+                    {searchQuery
+                      ? "No matching products found"
+                      : "No products found"}
+                  </h2>
+
                   <p>
-                    We couldn't find products matching "{searchText}".
-                    Try another product name.
+                    {searchQuery
+                      ? `We couldn't find products matching "${searchText}". Try another product name.`
+                      : "There are currently no products in this section."}
                   </p>
                 </div>
               ) : (
